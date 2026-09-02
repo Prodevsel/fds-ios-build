@@ -1,0 +1,43 @@
+name: openapi-lint
+
+# D-08 "spec = contract": the hand-maintained openapi.yaml is the partner API's
+# source of truth, so it is CI-linted on every change to the spec, the redocly
+# config, or the /v1 gateway function it documents. A spec that does not lint
+# clean (`redocly lint`, recommended ruleset) blocks merge.
+on:
+  pull_request:
+    paths:
+      - openapi.yaml
+      - redocly.yaml
+      - supabase/functions/v1-api/**
+      - supabase/functions/v1-docs/**
+      - package.json
+  push:
+    branches: [main]
+    paths:
+      - openapi.yaml
+      - redocly.yaml
+      - supabase/functions/v1-api/**
+      - supabase/functions/v1-docs/**
+      - package.json
+
+jobs:
+  lint-openapi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint the OpenAPI contract
+        run: pnpm lint:openapi

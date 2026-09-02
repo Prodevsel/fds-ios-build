@@ -1,0 +1,155 @@
+{
+  "title": "Unternehmen",
+  "subtitle": "Onboarding-Status aller Partnerunternehmen. Zeile anklicken zum Bearbeiten.",
+  "cta": {
+    "create": "Unternehmen anlegen"
+  },
+  "table": {
+    "name": "Unternehmen",
+    "status": "Onboarding",
+    "progress": "Fortschritt",
+    "contracts": "Verträge",
+    "step": "Schritt"
+  },
+  "status": {
+    "draft": "Entwurf",
+    "onboarding": "Onboarding",
+    "active": "Live"
+  },
+  "unnamed": "Unbenanntes Unternehmen",
+  "resume": "Assistent fortsetzen",
+  "empty": {
+    "heading": "Noch keine Unternehmen",
+    "body": "Lege dein erstes Unternehmen an, um mit dem Onboarding zu beginnen."
+  },
+  "error": {
+    "heading": "Unternehmen konnten nicht geladen werden",
+    "body": "Bitte lade die Seite neu.",
+    "createTitle": "Unternehmen konnte nicht angelegt werden",
+    "createBody": "Beim Anlegen ist ein Fehler aufgetreten. Bitte versuche es erneut."
+  },
+  "toast": {
+    "created": "Unternehmen angelegt",
+    "createdBody": "{{name}} wurde als Entwurf angelegt. Der Assistent ist geöffnet.",
+    "saved": "Fortschritt gespeichert",
+    "activated": "Unternehmen aktiviert",
+    "activatedBody": "{{name}} ist jetzt aktiv."
+  },
+  "wizard": {
+    "title": "Unternehmen onboarden",
+    "close": "Assistent schließen",
+    "stepOf": "Schritt {{current}} von {{total}}",
+    "steps": {
+      "master": "Stammdaten",
+      "branding": "Branding",
+      "apiKey": "API-Schlüssel",
+      "webhook": "Webhook-Ziel",
+      "commission": "Provisionsliste"
+    },
+    "backToList": "Zurück zur Liste",
+    "back": "Zurück",
+    "next": "Weiter",
+    "saveDraft": "Entwurf speichern",
+    "saving": "Wird gespeichert …",
+    "finish": "Unternehmen anlegen",
+    "master": {
+      "heading": "Stammdaten",
+      "body": "Firmenname und Stammdaten des Partnerunternehmens. Alle Felder außer dem Namen sind optional und lassen sich später ergänzen.",
+      "nameLabel": "Firmenname",
+      "namePlaceholder": "z. B. Nordlicht Vertrieb GmbH",
+      "nameRequired": "Bitte gib einen Unternehmensnamen ein.",
+      "legalFormLabel": "Rechtsform",
+      "legalFormPlaceholder": "Bitte wählen",
+      "hrbLabel": "Handelsregister-Nr.",
+      "hrbPlaceholder": "HRB 000000",
+      "contactLabel": "Ansprechpartner",
+      "contactPlaceholder": "Vor- und Nachname",
+      "emailLabel": "E-Mail",
+      "emailPlaceholder": "kontakt@firma.de",
+      "emailInvalid": "Bitte gib eine gültige E-Mail-Adresse ein."
+    },
+    "apiKey": {
+      "heading": "API-Schlüssel",
+      "body": "Der Partner-API-Schlüssel wird auf der Seite „API-Schlüssel“ generiert und dort einmalig angezeigt (Reveal-Once). Schließe zunächst das Onboarding ab und erzeuge den Schlüssel anschließend.",
+      "deferred": "Schlüsselerzeugung folgt im Bereich API-Schlüssel."
+    },
+    "webhook": {
+      "heading": "Webhook-Ziel",
+      "targetUrlLabel": "Ziel-URL (HTTPS)",
+      "targetUrlPlaceholder": "https://partner.example.com/webhooks/frontdoorsales",
+      "targetUrlInvalid": "Die Ziel-URL muss mit https:// beginnen.",
+      "body": "Jedes Vertragsereignis wird HMAC-SHA256-signiert an diese Adresse gesendet. Ein Signaturgeheimnis wird pro Unternehmen erzeugt."
+    },
+    "commission": {
+      "heading": "Provisionsliste",
+      "body": "Erfasse je Produkt die Provision. Die Beträge speisen die Wallet-Abrechnung (Phase 6); Auszahlungen werden hier nicht berechnet.",
+      "productLabel": "Produkt",
+      "rateLabel": "Provision",
+      "addRow": "Produkt hinzufügen",
+      "removeRow": "Zeile entfernen",
+      "noProducts": "Für dieses Unternehmen sind noch keine Produkte veröffentlicht (Publish-CLI, Phase 3)."
+    }
+  },
+  "branding": {
+    "heading": "Branding & Absenderidentität",
+    "body": "Diese Konfiguration liest die PDF- und E-Mail-Pipeline (White-Label, Iron Rule 6). Nicht überschriebene Felder erben den Plattformstandard.",
+    "inherited": "Erbt Standard",
+    "overridden": "Überschrieben",
+    "resetToDefault": "Zurücksetzen auf Standard",
+    "fields": {
+      "logo": "Logo",
+      "primaryColor": "Primärfarbe",
+      "companyDisplayName": "Anzeigename",
+      "agbText": "AGB-Text",
+      "belehrungText": "Widerrufsbelehrung",
+      "senderLocalPart": "Absender (lokaler Teil)",
+      "senderDisplayName": "Absender-Anzeigename",
+      "replyTo": "Antwort-an (Reply-To)"
+    },
+    "placeholders": {
+      "companyDisplayName": "Musterfirma",
+      "senderLocalPart": "vertrag",
+      "senderDisplayName": "Musterfirma Vertrieb",
+      "replyTo": "service@musterfirma.de",
+      "agbText": "AGB-Textbaustein für den Vertrag …",
+      "belehrungText": "Widerrufsbelehrung (statutory withdrawal notice) …"
+    },
+    "logoUpload": "Logo auswählen",
+    "logoPreviewAlt": "Logo-Vorschau",
+    "logoPreviewOnly": "Nur Vorschau",
+    "logoPreviewOnlyHint": "Das Logo wird hier nur zur Vorschau angezeigt und nicht gespeichert. Lade es auf der Branding-Seite hoch, um es zu übernehmen.",
+    "senderPreviewLabel": "Absender-Vorschau",
+    "colorInvalid": "Bitte gib eine gültige Hex-Farbe an (#rrggbb).",
+    "tooLong": "Text ist zu lang (max. {{max}} Zeichen).",
+    "save": "Branding speichern",
+    "saving": "Wird gespeichert …",
+    "saved": "Branding gespeichert"
+  },
+  "partnerTeams": {
+    "back": "Zurück zur Übersicht",
+    "subtitle": "Nach dem Onboarding: wer darf dieses Unternehmen verkaufen?",
+    "heading": "Vertriebsteams",
+    "body": "Ein angehaktes Team bekommt die Produkte dieses Unternehmens auf die Geräte seiner Mitarbeiter. Ohne Haken sieht das Team nichts davon.",
+    "loading": "Teams werden geladen …",
+    "noTeams": "Es gibt noch kein Vertriebsteam, das du verwalten darfst.",
+    "errorNotPermitted": "Für dieses Team darfst du keine Freigabe ändern. Nur die Leitung der zugehörigen Vertriebsorganisation kann das."
+  },
+  "packages": {
+    "heading": "Pakete & Preise",
+    "body": "Eine Zeile je Paket. Daraus entsteht eine vollständige Beratung: Paket wählen, E-Mail erfassen, Preis für genau dieses Paket, Widerrufsbelehrung, Unterschrift.",
+    "slugLabel": "Produkt-Kennung",
+    "slugPlaceholder": "z. B. smaica-social-media",
+    "nameLabel": "Paket",
+    "namePlaceholder": "z. B. Plus — 20 Inhalte im Monat",
+    "doorPriceLabel": "Türpreis (€)",
+    "comparisonPriceLabel": "Vergleichspreis (€)",
+    "termsLabel": "Konditionstext",
+    "termsPlaceholder": "Was in diesem Paket enthalten ist, Laufzeit, Widerrufsfrist — der Kunde liest das an der Tür.",
+    "add": "Paket hinzufügen",
+    "remove": "Zeile entfernen",
+    "publish": "Veröffentlichen",
+    "publishing": "Wird veröffentlicht …",
+    "done": "Das Produkt ist veröffentlicht. Es erscheint auf den Geräten der Teams, die dieses Unternehmen verkaufen dürfen.",
+    "error": "Das Produkt konnte nicht veröffentlicht werden."
+  }
+}

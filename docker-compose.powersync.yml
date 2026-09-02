@@ -1,0 +1,103 @@
+# docker-compose.powersync.yml
+#
+# Self-hosted PowerSync Open Edition against the Supabase local Postgres, with a dedicated
+# Postgres bucket-storage database (NOT MongoDB — per this plan's must_haves / MAND-02/SYNC-02).
+#
+# Source (fetched live 2026-07-16, per this task's <action> instruction to read current docs
+# rather than trust the paraphrased 01-RESEARCH.md example): synthesized from
+# https://github.com/powersync-ja/self-host-demo — demos/supabase/docker-compose.yaml (join the
+# Supabase Docker network by service name; do not run a duplicate Postgres for the source DB)
+# combined with demos/nodejs-postgres-bucket-storage/docker-compose.yaml (Postgres, not MongoDB,
+# bucket storage) and services/powersync.yaml (base PowerSync service definition).
+#
+# Usage:
+#   1. `supabase start` first (creates the `supabase_network_<project_id>` external network this
+#      file joins — see powersync/.env.example for how <project_id> is derived).
+#   2. Apply powersync/replication-setup.sql against the Supabase Postgres once.
+#   3. `cp powersync/.env.example powersync/.env` and fill in real local secrets (gitignored).
+#   4. `docker compose -f docker-compose.powersync.yml --env-file powersync/.env up`
+
+services:
+  # Dedicated Postgres bucket-storage database for PowerSync's own bucket/checkpoint state.
+  # Deliberately separate from the Supabase source database (Postgres storage available since
+  # powersync-service 1.3.8+, per docs.powersync.com/configuration/powersync-service/
+  # self-hosted-instances#postgres-storage).
+  powersync-bucket-storage:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${PS_STORAGE_DB_USER:-powersync_storage_user}
+      POSTGRES_PASSWORD: ${PS_STORAGE_DB_PASSWORD:?set PS_STORAGE_DB_PASSWORD in powersync/.env, never commit a real value}
+      POSTGRES_DB: ${PS_STORAGE_DB_NAME:-powersync_storage}
+    ports:
+      - "${PS_STORAGE_DB_PORT:-54331}:5432"
+    volumes:
+      - powersync_bucket_storage_data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${PS_STORAGE_DB_USER:-powersync_storage_user} -d ${PS_STORAGE_DB_NAME:-powersync_storage}",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  powersync:
+    # journeyapps/powersync-service, digest-pinned (NOT :latest) per 01-RESEARCH.md
+    # Anti-Patterns and threat T-01-16. Digest resolved live on 2026-07-16 via:
+    #   docker pull journeyapps/powersync-service:latest
+    #   docker inspect journeyapps/powersync-service:latest --format='{{index .RepoDigests 0}}'
+    # Re-resolve and re-pin deliberately (never silently float to a new digest) when bumping.
+    image: journeyapps/powersync-service@sha256:b6b22fa7d0d862f04bdff62846e656756d17bcf3dd6eca399a0633671051438b
+    restart: unless-stopped
+    # Unified: runs the API server + replication worker in one container (fine for local dev /
+    # this phase's spike). Split into `-r api` / `-r sync` containers for production scaling.
+    command: ["start", "-r", "unified"]
+    depends_on:
+      powersync-bucket-storage:
+        condition: service_healthy
+    volumes:
+      # Mounts this directory (service.yaml + sync-streams.yaml) into the container.
+      - ./powersync:/config
+    environment:
+      POWERSYNC_CONFIG_PATH: /config/service.yaml
+      # Service memory limit — roughly 80% of the container's available memory (recommended).
+      NODE_OPTIONS: --max-old-space-size=1000
+      # The following are read by service.yaml's `!env PS_*` tags. Only names starting with
+      # `PS_` are substituted by the PowerSync Service — see powersync/.env.example.
+      PS_DATA_SOURCE_URI: ${PS_DATA_SOURCE_URI:?set in powersync/.env — the powersync_role connection string, see replication-setup.sql}
+      PS_STORAGE_SOURCE_URI: postgresql://${PS_STORAGE_DB_USER:-powersync_storage_user}:${PS_STORAGE_DB_PASSWORD:?set PS_STORAGE_DB_PASSWORD in powersync/.env}@powersync-bucket-storage:5432/${PS_STORAGE_DB_NAME:-powersync_storage}
+      PS_JWKS_URL: ${PS_JWKS_URL:-http://kong:8000/auth/v1/.well-known/jwks.json}
+      PS_PORT: ${PS_PORT:-8080}
+      PS_ADMIN_API_TOKEN: ${PS_ADMIN_API_TOKEN:?set PS_ADMIN_API_TOKEN in powersync/.env}
+    ports:
+      - "${PS_PORT:-8080}:${PS_PORT:-8080}"
+    healthcheck:
+      # Requires image journeyapps/powersync-service:0.5.8+ (our pinned digest satisfies this).
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://localhost:${PS_PORT:-8080}/probes/liveness').then(r => r.ok ? process.exit(0) : process.exit(1)).catch(() => process.exit(1))",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+      # Supabase's own Docker network, created by `supabase start`. Lets this container reach
+      # the Supabase Postgres (`supabase_db_<project_id>`) and Kong (`kong`, for JWKS) by their
+      # internal service names — no host-port hairpinning, matches the official
+      # powersync-ja/self-host-demo demos/supabase pattern.
+    networks:
+      - default
+      - supabase
+
+volumes:
+  powersync_bucket_storage_data:
+
+networks:
+  default: {}
+  supabase:
+    name: ${SUPABASE_NETWORK_NAME:?set SUPABASE_NETWORK_NAME in powersync/.env — derived from supabase/config.toml project_id, e.g. supabase_network_<project_id>}
+    external: true

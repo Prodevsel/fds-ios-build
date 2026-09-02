@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+      The customer never sees our platform name. The title is generic; the
+      company's own name comes from the server response and is rendered on the
+      page itself once the one-time code has been entered.
+    -->
+    <title>Ihr Angebot</title>
+    <!-- A link in an email must not become a search result. -->
+    <meta name="robots" content="noindex, nofollow" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/customer/main.tsx"></script>
+  </body>
+</html>

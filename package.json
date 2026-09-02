@@ -1,0 +1,39 @@
+{
+  "name": "frontdoorsales",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@9.15.4",
+  "scripts": {
+    "lint": "biome check .",
+    "lint:openapi": "redocly lint openapi.yaml",
+    "format": "biome format --write .",
+    "typecheck": "pnpm -r --if-present run typecheck",
+    "test:db": "supabase test db",
+    "test:sync-drift": "node scripts/drift-test/run-drift-test.mjs",
+    "test:value-sets": "node scripts/drift-test/check-auto-lock-value-set.mjs",
+    "test:security-probes": "node scripts/spike/session-revocation-probe.mjs && node scripts/spike/auth-policy-probe.mjs && node scripts/spike/secure-password-change-probe.mjs",
+    "verify:jwt": "node scripts/verify-jwt-handshake.mjs",
+    "publish-product": "node scripts/publish-product/publish.mjs",
+    "test:delivery": "node scripts/demo/check-delivery-pipeline.mjs",
+    "preview:emails": "deno run --node-modules-dir=none --config supabase/functions/deno.json --allow-read --allow-write --allow-env --allow-net scripts/demo/preview-emails.ts"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@redocly/cli": "2.41.0",
+    "typescript": "^5.9.2",
+    "yaml": "^2.9.0"
+  },
+  "dependencies": {
+    "@frontdoorsales/flow-schema": "workspace:*",
+    "@supabase/supabase-js": "^2.110.6"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "@react-native/gradle-plugin@0.85.3": "patches/@react-native__gradle-plugin@0.85.3.patch"
+    }
+  },
+  "op-sqlite": {
+    "sqlcipher": true
+  },
+  "workspaces": ["apps/*", "packages/*"]
+}

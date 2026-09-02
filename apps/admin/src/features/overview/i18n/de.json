@@ -1,0 +1,62 @@
+{
+  "title": "Übersicht",
+  "subtitle": "Netzwerk-Überblick über alle Partnerunternehmen.",
+  "greeting": {
+    "morning": "Guten Morgen",
+    "day": "Guten Tag",
+    "evening": "Guten Abend"
+  },
+  "range": {
+    "7": "7 Tage",
+    "30": "30 Tage",
+    "90": "90 Tage"
+  },
+  "kpi": {
+    "contracts": "Unterschr. Verträge",
+    "companies": "Aktive Unternehmen",
+    "commission": "Provision (MTD)",
+    "commissionPending": "davon {{amount}} in Widerrufsfrist",
+    "webhookRate": "Webhook-Zustellrate"
+  },
+  "trend": {
+    "title": "Unterschriebene Verträge",
+    "empty": "Im gewählten Zeitraum wurden noch keine Verträge unterschrieben."
+  },
+  "onboarding": {
+    "title": "Onboarding-Status",
+    "totalLabel": "Aktive Unternehmen gesamt"
+  },
+  "funnel": {
+    "active": "Live",
+    "onboarding": "Onboarding",
+    "draft": "Entwurf"
+  },
+  "team": {
+    "title": "Verträge nach Unternehmen",
+    "empty": "Noch keine Verträge erfasst."
+  },
+  "activity": {
+    "title": "Letzte Aktivität",
+    "signed": "Vertrag von {{company}} unterschrieben",
+    "cancelled": "Vertrag von {{company}} storniert",
+    "companyCreated": "{{company}} als Unternehmen angelegt",
+    "empty": "Noch keine Aktivität."
+  },
+  "time": {
+    "now": "gerade eben",
+    "min": "vor {{count}} Min.",
+    "hour": "vor {{count}} Std.",
+    "yesterday": "gestern",
+    "day": "vor {{count}} Tagen"
+  },
+  "empty": {
+    "heading": "Noch keine Unternehmen",
+    "body": "Legen Sie Ihr erstes Partnerunternehmen an, um Kennzahlen, Onboarding-Status und Aktivität hier zu sehen.",
+    "cta": "Unternehmen anlegen"
+  },
+  "error": {
+    "heading": "Daten konnten nicht geladen werden",
+    "body": "Bitte laden Sie die Seite neu."
+  },
+  "unnamed": "Unbenanntes Unternehmen"
+}

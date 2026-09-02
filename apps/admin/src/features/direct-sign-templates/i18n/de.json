@@ -1,0 +1,79 @@
+{
+  "title": "Direktunterschrift-Vorlagen",
+  "subtitle": "PDF-Vertragsvorlagen hochladen, die Kunden unverändert an der Haustür unterschreiben.",
+  "company": {
+    "label": "Unternehmen",
+    "placeholder": "Unternehmen wählen …"
+  },
+  "upload": {
+    "cta": "PDF hochladen",
+    "dialogTitle": "Vertrags-PDF hochladen",
+    "dialogDescription": "Die Original-Datei wird unverändert gespeichert und später unverändert vom Kunden unterschrieben.",
+    "fileLabel": "PDF-Datei",
+    "submit": "Hochladen",
+    "submitting": "Wird hochgeladen …",
+    "cancel": "Abbrechen",
+    "close": "Dialog schließen",
+    "errors": {
+      "invalidType": "Bitte wähle eine PDF-Datei aus.",
+      "tooLarge": "Die Datei ist zu groß (maximal 25 MB).",
+      "noCompany": "Bitte wähle zuerst ein Unternehmen aus.",
+      "generic": "Der Upload ist fehlgeschlagen. Bitte versuche es erneut."
+    }
+  },
+  "toast": {
+    "uploaded": "PDF-Vorlage hochgeladen (Entwurf).",
+    "placementSaved": "Unterschriftsposition gespeichert.",
+    "published": "Direktunterschrift-Produkt veröffentlicht."
+  },
+  "table": {
+    "file": "Datei",
+    "status": "Status",
+    "uploaded": "Hochgeladen am"
+  },
+  "status": {
+    "draft": "Entwurf",
+    "published": "Veröffentlicht"
+  },
+  "noCompany": {
+    "heading": "Kein Unternehmen ausgewählt",
+    "body": "Wähle oben ein Unternehmen aus, um dessen Vorlagen zu sehen."
+  },
+  "empty": {
+    "heading": "Noch keine Vorlagen",
+    "body": "Lade die erste Vertrags-PDF für dieses Unternehmen hoch, um loszulegen."
+  },
+  "error": {
+    "heading": "Vorlagen konnten nicht geladen werden",
+    "body": "Bitte lade die Seite neu."
+  },
+  "placement": {
+    "heading": "Positionen festlegen",
+    "body": "Wähle oben aus, was du platzierst, dann die Seite, dann klicke auf die Stelle im PDF.",
+    "pageLabel": "Seite",
+    "save": "Position speichern",
+    "saving": "Wird gespeichert …",
+    "notSet": "Noch keine Position festgelegt.",
+    "loadError": "Die PDF-Vorschau konnte nicht geladen werden.",
+    "targetLabel": "Was platzieren?",
+    "targetSignature": "Unterschrift"
+  },
+  "publish": {
+    "heading": "Widerrufsbelehrung & Veröffentlichung",
+    "body": "Der Text ist unabhängig vom PDF-Inhalt und wird immer app-seitig angezeigt.",
+    "slugLabel": "Produkt-Slug",
+    "slugPlaceholder": "z. B. glasfaser-basic",
+    "versionLabel": "Version",
+    "noticeLabel": "Widerrufsbelehrung",
+    "noticeHint": "Vorausgefüllt mit dem Standardtext; optional individuell anpassen.",
+    "submit": "Veröffentlichen",
+    "submitting": "Wird veröffentlicht …",
+    "missingPlacement": "Bitte lege zuerst die Unterschriftsposition fest.",
+    "errors": {
+      "generic": "Die Veröffentlichung ist fehlgeschlagen. Bitte prüfe die Eingaben."
+    },
+    "questionsLabel": "Fragen vor dem PDF",
+    "questionsHint": "Übernimmt die Fragen eines bereits veröffentlichten Produkts desselben Unternehmens — so wählt der Kunde sein Paket, bevor er den Vertrag sieht.",
+    "questionsNone": "Keine Fragen (nur PDF, Belehrung, Unterschrift)"
+  }
+}

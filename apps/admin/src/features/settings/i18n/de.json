@@ -1,0 +1,141 @@
+{
+  "title": "Einstellungen",
+  "subtitle": "Operator-Konto und Organisation FrontDoorSales.",
+  "actions": {
+    "signOut": "Abmelden",
+    "save": "Speichern",
+    "saving": "Wird gespeichert …",
+    "unsaved": "Ungespeichert"
+  },
+  "toast": {
+    "saved": "Gespeichert"
+  },
+  "errors": {
+    "saveGeneric": "Änderung konnte nicht gespeichert werden. Bitte erneut versuchen."
+  },
+  "tablist": "Einstellungsbereiche",
+  "tabs": {
+    "profile": "Profil",
+    "team": "Team & Rollen",
+    "notifications": "Benachrichtigungen",
+    "governance": "Vorgaben",
+    "sessions": "Sitzungen"
+  },
+  "profile": {
+    "heading": "Profil",
+    "changePhoto": "Bild ändern",
+    "name": "Name",
+    "email": "E-Mail",
+    "emailReadOnly": "Wird über Ihr Anmeldekonto verwaltet",
+    "org": "Organisationsname",
+    "orgValueUnknown": "Wird geladen …",
+    "orgReadOnly": "Wird von FrontDoorSales verwaltet",
+    "language": "Sprache",
+    "languageOptions": {
+      "de": "Deutsch",
+      "en": "Englisch"
+    },
+    "unnamed": "Ohne Namen",
+    "password": {
+      "heading": "Passwort ändern",
+      "currentLabel": "Aktuelles Passwort",
+      "currentRejected": "Aktuelles Passwort ist falsch.",
+      "label": "Neues Passwort",
+      "hint": "Mindestens 12 Zeichen.",
+      "tooShort": "Noch {{n}} Zeichen bis zur Mindestlänge.",
+      "rejectedByServer": "Das Passwort erfüllt die Anforderungen nicht (mindestens 12 Zeichen, keine zu häufig verwendeten Passwörter). Bitte ein anderes Passwort wählen."
+    }
+  },
+  "team": {
+    "heading": "Team & Rollen",
+    "subtitle": "Wer hat Zugriff auf das Partner-Admin.",
+    "manageLink": "Mitarbeiter und Rollen verwalten",
+    "you": "Du",
+    "table": {
+      "member": "Mitglied",
+      "role": "Rolle",
+      "status": "Status"
+    },
+    "status": {
+      "active": "Aktiv"
+    }
+  },
+  "roles": {
+    "operator": "Operator",
+    "team_lead": "Teamleitung",
+    "unknown": "Mitglied"
+  },
+  "notifications": {
+    "heading": "Benachrichtigungen",
+    "repManaged": "Benachrichtigungen steuern Mitarbeiter selbst in der App."
+  },
+  "governance": {
+    "heading": "Vorgaben für Vertriebsmitarbeiter",
+    "subtitle": "Legen Sie Standardwerte fest oder begrenzen Sie Sicherheitseinstellungen als Obergrenze — ein Mitarbeiter kann diese immer strenger, nie lockerer wählen.",
+    "emptyHeading": "Noch keine Vorgaben festgelegt",
+    "emptyBody": "Legen Sie einen Standardwert oder eine Sicherheitsgrenze für Ihre Vertriebsmitarbeiter fest.",
+    "autoLockLabel": "Automatische Sperre nach",
+    "autoLockHint": "Maximal erlaubte Wartezeit, bevor die App sich sperrt. Mitarbeiter können eine kürzere Zeit wählen.",
+    "autoLockPlaceholder": "Bitte wählen",
+    "autoLockValue1": "1 Minute",
+    "autoLockValue5": "5 Minuten",
+    "autoLockValue15": "15 Minuten",
+    "autoLockValue30": "30 Minuten",
+    "autoLockValue60": "60 Minuten",
+    "notAdmin": "Nur Operator können Vorgaben für die Organisation festlegen.",
+    "errors": {
+      "saveGeneric": "Vorgabe konnte nicht gespeichert werden. Bitte erneut versuchen."
+    }
+  },
+  "loading": "Konto wird geladen …",
+  "sessions": {
+    "title": "Aktive Sitzungen",
+    "latencyExplainer": "Eine widerrufene Sitzung kann noch bis zu 15 Minuten aktiv bleiben, bis der Zugriff endgültig endet.",
+    "currentDeviceBadge": "Dieses Gerät",
+    "columnUserAgent": "Gerätekennung",
+    "userAgentCaption": "Gerätekennung (vom Browser/App übermittelt)",
+    "columnIp": "IP-Adresse",
+    "ipUnavailable": "Nicht verfügbar",
+    "columnLastActive": "Zuletzt aktiv",
+    "columnAction": "Aktion",
+    "revokeCta": "Sitzung widerrufen",
+    "revokeConfirmInline": "Wirklich widerrufen?",
+    "revokeConfirmCta": "Sitzung widerrufen",
+    "revokeCurrentConfirmTitle": "Dieses Gerät abmelden?",
+    "revokeCurrentConfirmBody": "Du widerrufst die Sitzung, die du gerade benutzt. Dieses Gerät verliert den Zugriff innerhalb von 15 Minuten.",
+    "revokeCurrentConfirmCta": "Ja, dieses Gerät abmelden",
+    "revokingState": "Wird beendet — Zugriff endet innerhalb von 15 Minuten",
+    "emptyHeading": "Keine aktiven Sitzungen gefunden",
+    "emptyBody": "Versuche es erneut oder lade die Seite neu.",
+    "loadErrorGeneric": "Sitzungen konnten nicht geladen werden. Prüfe deine Verbindung.",
+    "revokeErrorGeneric": "Sitzung konnte nicht widerrufen werden. Prüfe deine Verbindung und versuche es erneut.",
+    "closeDialog": "Schließen",
+    "cancelCta": "Abbrechen"
+  },
+  "wipe": {
+    "tabLabel": "Fernlöschung",
+    "notAdmin": "Nur Operator können eine Fernlöschung auslösen.",
+    "repSelectLabel": "Mitarbeiter",
+    "repSelectPlaceholder": "Bitte wählen",
+    "columnRep": "Mitarbeiter",
+    "columnDevice": "Gerät",
+    "columnStatus": "Status",
+    "columnAction": "Aktion",
+    "emptyHeading": "Keine Fernlöschungen angeordnet",
+    "statusQueued": "Angeordnet — wartet auf Verbindung",
+    "statusDraining": "Gesperrt — {{n}} Artefakte werden noch übertragen",
+    "statusStalled": "Gesperrt — Warteschlange blockiert, {{n}} Artefakte hängen fest",
+    "statusStalledUnverifiedPath": "Gesperrt — Speicherort auf dem Gerät nicht bestätigt. Warten behebt das nicht; bitte an die Technik eskalieren.",
+    "statusComplete": "Gelöscht — abgeschlossen am {{date}}",
+    "forceCta": "Jetzt löschen",
+    "forceConfirmTitle": "{{n}} nicht übertragene Elemente jetzt endgültig verwerfen?",
+    "forceConfirmBody": "Diese Aktion kann nicht rückgängig gemacht werden. {{n}} unsynchronisierte Verträge/Artefakte gehen dauerhaft verloren.",
+    "forceConfirmCta": "Ja, {{n}} Elemente verwerfen",
+    "forcedNote": "Manuell abgeschlossen von {{adminName}} am {{date}} — {{n}} Elemente verworfen.",
+    "triggerCta": "Fernlöschung auslösen",
+    "triggerConfirmTitle": "Fernlöschung für dieses Gerät auslösen?",
+    "triggerConfirmBody": "Das Gerät wird bei der nächsten Verbindung sofort gesperrt und alle lokalen Daten werden entfernt, sobald ausstehende Übertragungen abgeschlossen sind.",
+    "closeDialog": "Schließen",
+    "cancelCta": "Abbrechen"
+  }
+}

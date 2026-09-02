@@ -1,0 +1,9 @@
+{
+  "platforms": ["ios", "android"],
+  "apple": {
+    "modules": ["ScreenRecordingDetectorModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.screenrecordingdetector.ScreenRecordingDetectorModule"]
+  }
+}

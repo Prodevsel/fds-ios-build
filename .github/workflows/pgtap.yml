@@ -1,0 +1,61 @@
+name: pgtap
+
+# MAND-03: every PR runs the full pgTAP cross-tenant isolation suite. A
+# failing pgTAP test (cross_tenant_isolation, rls_coverage_meta,
+# conflict_functions, or conflict_integration) blocks merge — this is the
+# CI-enforced foundation rule that guards MAND-01/MAND-02 against future
+# migration drift.
+#
+# MAND-02 / Plan 08: the RLS <-> sync-stream drift test (`pnpm test:sync-drift`)
+# also runs on every PR, after the pgTAP suite — it replays the SAME seeded
+# fixtures through both supabase/migrations/0002_visibility_function.sql's
+# visible_* functions and powersync/sync-streams.yaml's stream queries and
+# fails the PR if a migration changes RLS without a matching sync-stream
+# change (or vice versa), per ARCHITECTURE.md Iron Rule 2.
+on:
+  pull_request:
+  # Direct pushes to main must not bypass the foundation gate (verification
+  # gap: pull_request-only left the suite unenforceable without branch
+  # protection on this plan tier).
+  push:
+    branches: [main]
+
+jobs:
+  pgtap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: supabase/setup-cli@v1
+        with:
+          # Exact pin matching the CLI version used locally (WR-06): the old
+          # 1.11.4 pin (the docs' *minimum* for this action, misread as a
+          # recommendation) predates Postgres 17 local images and the
+          # config.toml keys this repo uses (e.g. [db.seed].sql_paths, which
+          # the seed wiring below depends on). Keep in sync with local dev;
+          # never `latest` (unpinned CI is not reproducible).
+          version: 2.109.1
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies (drift test needs the workspace's `yaml` dependency)
+        run: pnpm install --frozen-lockfile
+
+      - name: Start local Supabase stack
+        run: supabase start
+
+      - name: Apply migrations + seed fixtures to a clean database
+        run: supabase db reset
+
+      - name: Run pgTAP suite
+        run: supabase test db
+
+      - name: Run RLS <-> sync-stream drift test (MAND-02)
+        run: pnpm test:sync-drift

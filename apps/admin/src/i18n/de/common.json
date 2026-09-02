@@ -1,0 +1,40 @@
+{
+  "app": {
+    "title": "FrontDoorSales Admin"
+  },
+  "nav": {
+    "sectionMain": "Allgemein",
+    "sectionOperator": "Operator",
+    "sectionTeamLead": "Team",
+    "sectionAccount": "Konto",
+    "overview": "Übersicht",
+    "cancellations": "Widerruf erfassen",
+    "deals": "Abschlüsse",
+    "companies": "Unternehmen",
+    "directSignTemplates": "Direktunterschrift-Vorlagen",
+    "branding": "Standard-Branding",
+    "apiKeys": "API-Schlüssel",
+    "webhooks": "Webhooks",
+    "reps": "Mitarbeiter",
+    "territories": "Gebiete",
+    "reporting": "Reporting",
+    "leaderboardConfig": "Leaderboard-Konfiguration",
+    "settings": "Einstellungen"
+  },
+  "role": {
+    "operator": "Operator",
+    "team_lead": "Team Lead"
+  },
+  "auth": {
+    "signInPrompt": "Bitte melde dich an, um fortzufahren.",
+    "signOut": "Abmelden"
+  },
+  "errors": {
+    "offline": "Keine Verbindung. Prüfe dein Netz und versuche es erneut."
+  },
+  "noAccess": {
+    "heading": "Kein Zugang zum Dashboard",
+    "body": "Dieses Dashboard ist für die Vertriebsleitung und die Betriebsleitung. Als Vertriebsmitarbeiter arbeitest du in der App — dort findest du deine Gebiete, Termine und Abschlüsse.",
+    "signOut": "Abmelden"
+  }
+}

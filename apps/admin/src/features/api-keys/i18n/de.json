@@ -1,0 +1,79 @@
+{
+  "title": "API-Schlüssel",
+  "subtitle": "Bearer-Schlüssel für den Partner-API-Zugang eines Unternehmens verwalten.",
+  "company": {
+    "label": "Unternehmen",
+    "placeholder": "Unternehmen auswählen …",
+    "all": "Alle Unternehmen (Operator)"
+  },
+  "cta": {
+    "create": "API-Schlüssel erstellen"
+  },
+  "createNeedsCompany": "Wähle ein einzelnes Unternehmen, um einen Schlüssel zu erstellen.",
+  "operator": {
+    "stats": {
+      "active": "Aktiv",
+      "covered": "Abgedeckt",
+      "revoked": "Gesperrt"
+    },
+    "company": "Unternehmen",
+    "empty": {
+      "heading": "Noch keine Schlüssel",
+      "body": "Für keines deiner Unternehmen wurde bisher ein API-Schlüssel erstellt."
+    }
+  },
+  "maxTooltip": "Pro Unternehmen sind höchstens 2 aktive Schlüssel erlaubt. Deaktiviere zuerst einen bestehenden Schlüssel (Rotation: neuen Schlüssel erstellen, Partner umstellen, alten deaktivieren).",
+  "table": {
+    "key": "Schlüssel",
+    "label": "Bezeichnung",
+    "created": "Erstellt",
+    "status": "Status",
+    "actions": "Aktionen"
+  },
+  "status": {
+    "active": "Aktiv",
+    "revoked": "Deaktiviert"
+  },
+  "masked": "sk_••••{{prefix}}",
+  "noLabel": "Ohne Bezeichnung",
+  "deactivate": {
+    "action": "Deaktivieren",
+    "confirmTitle": "Schlüssel deaktivieren?",
+    "confirmBody": "Dieser Schlüssel wird sofort ungültig. Partner, die ihn noch verwenden, verlieren den Zugang. Diese Aktion kann nicht rückgängig gemacht werden.",
+    "confirm": "Endgültig deaktivieren",
+    "cancel": "Abbrechen",
+    "close": "Dialog schließen"
+  },
+  "reveal": {
+    "title": "Schlüssel erstellen",
+    "labelField": "Bezeichnung",
+    "labelPlaceholder": "z. B. Produktion Backend",
+    "formWarning": "Der Schlüssel wird nur einmal angezeigt. Danach ist er gehasht gespeichert und nicht mehr abrufbar.",
+    "generate": "Erstellen",
+    "generating": "Wird erstellt …",
+    "successTitle": "Schlüssel erstellt",
+    "warning": "Kopiere diesen Schlüssel jetzt — er wird danach nicht erneut angezeigt.",
+    "copy": "Kopieren",
+    "copied": "Kopiert",
+    "done": "Fertig",
+    "cancel": "Abbrechen",
+    "close": "Dialog schließen"
+  },
+  "errors": {
+    "max_active": "Dieses Unternehmen hat bereits 2 aktive Schlüssel. Deaktiviere zuerst einen bestehenden Schlüssel.",
+    "unauthorized": "Du bist nicht berechtigt, für dieses Unternehmen einen Schlüssel zu erstellen.",
+    "generic": "Der Schlüssel konnte nicht erstellt werden. Bitte versuche es erneut."
+  },
+  "empty": {
+    "heading": "Noch keine Schlüssel",
+    "body": "Für dieses Unternehmen wurde noch kein API-Schlüssel erstellt."
+  },
+  "selectPrompt": {
+    "heading": "Unternehmen auswählen",
+    "body": "Wähle oben ein Unternehmen, um dessen API-Schlüssel zu verwalten."
+  },
+  "error": {
+    "heading": "Schlüssel konnten nicht geladen werden",
+    "body": "Bitte lade die Seite neu."
+  }
+}

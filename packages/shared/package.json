@@ -1,0 +1,11 @@
+{
+  "name": "@frontdoorsales/shared",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Types/utils with demonstrably >=2 consumers (Rule of Two).",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}

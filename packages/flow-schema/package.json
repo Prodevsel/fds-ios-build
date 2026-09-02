@@ -1,0 +1,19 @@
+{
+  "name": "@frontdoorsales/flow-schema",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "SSOT of the form engine: block types, schema, validation — shared by mobile, admin, and Edge Functions.",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.10"
+  }
+}

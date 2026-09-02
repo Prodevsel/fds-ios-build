@@ -1,0 +1,132 @@
+# iOS prebuild probe — reconnaissance, not a build pipeline.
+#
+# This project has NEVER been built for iOS. `apps/mobile/ios` does not exist; Android has
+# been built continuously, iOS not once. Before renting a Mac by the hour, this job answers
+# the only question that matters: does `expo prebuild -p ios` followed by `pod install`
+# survive 32 native dependencies on this pin?
+#
+# It deliberately does NOT try to produce an .ipa. Signing, provisioning and archiving are
+# separate problems, and none of them matter if pods do not resolve.
+#
+# Cost note: macOS runners bill at 10x on private repos. The free tier's 2000 minutes
+# therefore means roughly 200 macOS minutes — about six to eight runs of this job. Do not
+# put it on `push`.
+name: iOS prebuild probe
+
+on:
+  # workflow_dispatch alone is not enough here: GitHub only offers the "Run workflow" button
+  # for workflows that exist on the DEFAULT branch, and main is still at Phase-12 state. The
+  # path filter below is the workaround — this job runs only when this very file changes, so
+  # it never fires incidentally on ordinary pushes and never burns macOS minutes by surprise.
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/ios-prebuild-probe.yml'
+
+jobs:
+  probe:
+    # macos-15: the macos-14 image ships Xcode 15.4, and React Native 0.85 refuses
+    # anything below 16.1 ("Please upgrade XCode" straight out of the Podfile).
+    runs-on: macos-15
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assert SQLCipher is actually enabled for iOS
+        run: |
+          # op-sqlite's podspec walks UPWARD from its own directory looking for a package.json.
+          # pnpm hoists it to the workspace root, so it finds the ROOT package.json — not
+          # apps/mobile's. Without the key there it silently falls back to "pure SQLite",
+          # i.e. an UNENCRYPTED local database, while Android (which resolves from
+          # apps/mobile/android upward) stays correctly encrypted. CLAUDE.md calls SQLCipher
+          # non-negotiable, so assert it rather than read it in a log after the fact.
+          v=$(node -p "require('./package.json')['op-sqlite'] && require('./package.json')['op-sqlite'].sqlcipher" )
+          echo "root package.json op-sqlite.sqlcipher = $v"
+          [ "$v" = "true" ] || { echo "::error::SQLCipher would be disabled on iOS"; exit 1; }
+
+      - name: Toolchain versions (recorded so a failure is diagnosable)
+        run: |
+          echo "xcode: $(xcodebuild -version | head -1)"
+          echo "swift: $(swift --version 2>&1 | head -1)"
+          echo "ruby:  $(ruby -v)"
+          echo "pod:   $(pod --version 2>/dev/null || echo 'not installed')"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Enable pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+          pnpm -v
+
+      - name: Install workspace dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Landmine documented in CLAUDE.md: @powersync/op-sqlite@0.9.15 accepts
+      # @op-engineering/op-sqlite ^13|^14|^15 but npm 'latest' is 17.x. If the lockfile
+      # ever floats, this is where it shows up — so assert it rather than discover it in Xcode.
+      - name: Assert the op-sqlite pin held
+        run: |
+          v=$(node -p "require('./apps/mobile/node_modules/@op-engineering/op-sqlite/package.json').version" 2>/dev/null || echo "missing")
+          echo "op-sqlite resolved to: $v"
+          case "$v" in
+            15.*) echo "OK — inside the ^15 range PowerSync requires" ;;
+            missing) echo "::warning::op-sqlite not resolved under apps/mobile — check workspace layout" ;;
+            *) echo "::error::op-sqlite is $v, outside the ^15 range @powersync/op-sqlite@0.9.15 accepts"; exit 1 ;;
+          esac
+
+      - name: expo prebuild -p ios (first time this project has ever done this)
+        id: prebuild
+        working-directory: apps/mobile
+        run: npx expo prebuild -p ios --no-install
+
+      - name: List what prebuild produced
+        if: always()
+        working-directory: apps/mobile
+        run: |
+          echo "--- ios/ ---"
+          ls -la ios 2>/dev/null || echo "ios/ was not created"
+          echo "--- Podfile ---"
+          cat ios/Podfile 2>/dev/null | head -40 || echo "no Podfile"
+
+      - name: pod install — the step most likely to fail
+        id: pods
+        working-directory: apps/mobile/ios
+        run: pod install --repo-update
+
+      - name: Pod summary
+        if: always()
+        working-directory: apps/mobile/ios
+        run: |
+          echo "--- pod count ---"
+          grep -c "^  - " Podfile.lock 2>/dev/null || echo "no Podfile.lock"
+          echo "--- the four risky natives ---"
+          for p in op-sqlite VisionCamera MapLibre ScreenRecordingDetector; do
+            printf "%-24s " "$p"
+            grep -i "$p" Podfile.lock >/dev/null 2>&1 && echo "present" || echo "ABSENT"
+          done
+
+      - name: Upload generated ios/ for inspection
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-prebuild-output
+          path: |
+            apps/mobile/ios/Podfile
+            apps/mobile/ios/Podfile.lock
+          if-no-files-found: warn
+          retention-days: 5
+
+      - name: Verdict
+        if: always()
+        run: |
+          echo "prebuild: ${{ steps.prebuild.outcome }}"
+          echo "pods:     ${{ steps.pods.outcome }}"
+          if [ "${{ steps.pods.outcome }}" = "success" ]; then
+            echo "::notice::Pods resolved. A rented Mac can realistically get to a build."
+          else
+            echo "::notice::Pods did not resolve. Read the failing step before renting anything."
+          fi

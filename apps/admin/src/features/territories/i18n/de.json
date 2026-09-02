@@ -1,0 +1,69 @@
+{
+  "title": "Gebiete",
+  "subtitle": "Gebiete deines Teams auf der Karte: zeichnen, benennen und einem Mitarbeiter zuweisen.",
+  "map": {
+    "label": "Karte der Gebiete deines Teams",
+    "hint": "Klicke auf ein Gebiet, um es auszuwählen.",
+    "drawHint": "Klicke nacheinander auf die Ecken des neuen Gebiets. Mindestens drei Ecken.",
+    "pointCount_one": "{{count}} Ecke gesetzt",
+    "pointCount_other": "{{count}} Ecken gesetzt"
+  },
+  "legend": {
+    "title": "Haus-Status",
+    "new": "Neu",
+    "not_home": "Nicht angetroffen",
+    "follow_up": "Wiedervorlage",
+    "no_interest": "Kein Interesse",
+    "blacklist": "Keine Ansprache",
+    "success": "Abschluss"
+  },
+  "cta": {
+    "draw": "Gebiet zeichnen",
+    "finish": "Gebiet speichern",
+    "undo": "Letzte Ecke zurück",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "close": "Schließen"
+  },
+  "create": {
+    "title": "Neues Gebiet",
+    "description": "Gib dem gezeichneten Gebiet einen Namen.",
+    "nameLabel": "Name des Gebiets",
+    "namePlaceholder": "z. B. Leonberg Nord",
+    "teamLabel": "Team",
+    "saving": "Wird gespeichert …"
+  },
+  "draft": {
+    "too_few_points": "Ein Gebiet braucht mindestens drei Ecken.",
+    "self_intersecting": "Die Umrisslinie überkreuzt sich. Setze die Ecken so, dass sich die Kanten nicht schneiden."
+  },
+  "list": {
+    "title": "Gebiete",
+    "houses_one": "{{count}} Haus",
+    "houses_other": "{{count}} Häuser",
+    "notDrawn": "Noch nicht gezeichnet",
+    "assignLabel": "Zugewiesen an",
+    "unassigned": "— nicht zugewiesen —",
+    "assigning": "Wird gespeichert …",
+    "nameless": "Ohne Namen",
+    "lockHeld": "Gerätesperre: {{name}}",
+    "lockFree": "Gerätesperre: frei",
+    "lockUnknownUser": "Unbekannter Nutzer",
+    "lockExplainer": "Die Gerätesperre ist der kurzlebige Anspruch, den ein Mitarbeiter selbst in der App setzt — sie ist nicht die Zuweisung und wird von diesem Bildschirm nicht verändert."
+  },
+  "empty": {
+    "noTeamTitle": "Kein Team unter deiner Leitung",
+    "noTeamBody": "Gebiete lassen sich nur für ein Team anlegen, dessen Leitung du bist. In der Datenbank ist dir aktuell kein Team als Leitung zugeordnet.",
+    "noTerritoriesTitle": "Noch keine Gebiete",
+    "noTerritoriesBody": "Zeichne das erste Gebiet deines Teams direkt auf der Karte.",
+    "errorTitle": "Gebiete konnten nicht geladen werden",
+    "errorBody": "Die Abfrage wurde abgelehnt oder ist fehlgeschlagen. Lade die Seite neu."
+  },
+  "verdict": {
+    "not_entitled": "Du bist für dieses Gebiet nicht berechtigt.",
+    "not_team_member": "Die Person gehört nicht zum Team dieses Gebiets.",
+    "not_activated": "Die Person hat ihren Zugang noch nicht bestätigt.",
+    "invalid_geometry": "Die Datenbank hat die Umrissform abgelehnt. Das Gebiet wurde ohne Umriss angelegt.",
+    "unknown": "Der Schreibvorgang ist fehlgeschlagen."
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "login": {
+    "title": "Anmelden",
+    "subtitle": "Melde dich mit deinem Einladungs-Konto an.",
+    "emailLabel": "E-Mail",
+    "emailPlaceholder": "name@firma.de",
+    "passwordLabel": "Passwort",
+    "showPasswordLabel": "Passwort anzeigen",
+    "hidePasswordLabel": "Passwort verbergen",
+    "resetLinkCta": "Passwort zurücksetzen",
+    "submitCta": "Anmelden",
+    "submitting": "Anmelden …",
+    "errorCredentials": "E-Mail oder Passwort falsch. Prüfe die Eingabe oder",
+    "errorCredentialsLinkSuffix": "setze dein Passwort zurück",
+    "footerAccessNote": "Zugang nur per Einladung",
+    "heroEyebrow": "Partner-Admin",
+    "heroHeadline": "Das Cockpit hinter jeder Haustür.",
+    "heroBody": "White-Label-Onboarding, API-Schlüssel, Webhooks und Reporting — an einem Ort.",
+    "heroFooter": "live · door-to-door"
+  },
+  "resetRequest": {
+    "title": "Passwort zurücksetzen",
+    "subtitle": "Gib deine E-Mail-Adresse ein. Wir senden dir einen Link, falls ein Konto existiert.",
+    "submitCta": "Link senden",
+    "confirmation": "Falls für diese E-Mail-Adresse ein Konto besteht, wurde eine Nachricht mit weiteren Schritten verschickt.",
+    "backToLogin": "Zurück zur Anmeldung"
+  },
+  "resetComplete": {
+    "title": "Neues Passwort festlegen",
+    "submitCta": "Neues Passwort speichern",
+    "linkExpired": "Dieser Link ist abgelaufen oder wurde bereits verwendet. Fordere einen neuen Link an."
+  },
+  "passwordPolicy": {
+    "hint": "Mindestens 12 Zeichen.",
+    "tooShort": "Noch {{n}} Zeichen bis zur Mindestlänge.",
+    "rejectedByServer": "Das Passwort erfüllt die Anforderungen nicht (mindestens 12 Zeichen, keine zu häufig verwendeten Passwörter). Bitte ein anderes Passwort wählen."
+  },
+  "version": {
+    "label": "Version {{version}}"
+  },
+  "demoAccounts": {
+    "hint": "Demo-Zugänge (nur lokale Entwicklung)",
+    "operator": "Operator",
+    "teamleitung": "Teamleitung",
+    "vertrieb": "Vertrieb"
+  }
+}

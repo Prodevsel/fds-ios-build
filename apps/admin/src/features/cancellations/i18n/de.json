@@ -1,0 +1,69 @@
+{
+  "title": "Widerruf erfassen",
+  "subtitle": "Vertrag über Deal-Referenz oder Kundenname suchen, dann Widerruf erfassen.",
+  "search": {
+    "label": "Vertrag suchen",
+    "placeholder": "z. B. V-2026-10842 oder Berger"
+  },
+  "table": {
+    "reference": "Deal-Referenz",
+    "customer": "Kunde",
+    "company": "Unternehmen",
+    "status": "Status"
+  },
+  "derived": {
+    "signed": "Signiert",
+    "cancelled": "Widerrufen"
+  },
+  "select": "Auswählen",
+  "back": "Zurück zur Suche",
+  "detail": {
+    "commission": "Provision",
+    "company": "Unternehmen",
+    "product": "Produkt",
+    "rep": "Sales Rep",
+    "deadline": "Widerrufsfrist",
+    "unknown": "—"
+  },
+  "timeline": {
+    "heading": "Statusverlauf",
+    "appendOnly": "Append-only · Einträge können nicht bearbeitet oder gelöscht werden.",
+    "empty": "Für diesen Vertrag sind noch keine Status-Ereignisse erfasst."
+  },
+  "selected": {
+    "recordTitle": "Widerruf erfassen",
+    "recordBody": "Setzt den Vertrag auf „widerrufen“ und benachrichtigt das Unternehmen per Webhook.",
+    "record": "Widerruf erfassen",
+    "alreadyCancelled": "Dieser Vertrag wurde bereits widerrufen. Das Unternehmen wurde benachrichtigt."
+  },
+  "event": {
+    "signed": "Vertrag signiert",
+    "cancelled": "Widerruf erfasst · Webhook gesendet"
+  },
+  "confirm": {
+    "title": "Widerruf für {{ref}} erfassen?",
+    "bodyLead": "Das Unternehmen wird per Webhook benachrichtigt.",
+    "irreversible": "Diese Aktion ist nicht rückgängig machbar.",
+    "confirm": "Widerruf bestätigen",
+    "cancel": "Abbrechen",
+    "close": "Dialog schließen"
+  },
+  "toast": {
+    "recorded": "Widerruf erfasst · Unternehmen benachrichtigt"
+  },
+  "errors": {
+    "generic": "Der Widerruf konnte nicht erfasst werden. Bitte versuche es erneut."
+  },
+  "searchEmpty": {
+    "heading": "Vertrag suchen",
+    "body": "Gib oben eine Deal-Referenz ein, um einen Vertrag zu finden."
+  },
+  "noResults": {
+    "heading": "Kein Vertrag gefunden",
+    "body": "Kein Vertrag gefunden für „{{query}}“."
+  },
+  "error": {
+    "heading": "Verträge konnten nicht geladen werden",
+    "body": "Bitte lade die Seite neu."
+  }
+}

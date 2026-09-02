@@ -1,0 +1,78 @@
+{
+  "title": "Mitarbeiter",
+  "subtitle": "Vertriebsmitarbeiter deines Teams einladen und verwalten.",
+  "invite": {
+    "cta": "Mitarbeiter einladen",
+    "dialogTitle": "Mitarbeiter einladen",
+    "dialogDescription": "Der Mitarbeiter erhält eine E-Mail-Einladung und wird nach dem Setzen eines Passworts automatisch deinem Team zugeordnet.",
+    "emailLabel": "E-Mail-Adresse",
+    "emailPlaceholder": "name@beispiel.de",
+    "roleLabel": "Rolle",
+    "roles": {
+      "rep": "Vertriebsmitarbeiter",
+      "team_lead": "Teamleitung"
+    },
+    "submit": "Einladung senden",
+    "submitting": "Wird gesendet …",
+    "cancel": "Abbrechen",
+    "close": "Dialog schließen"
+  },
+  "toast": {
+    "success": "Einladung versendet",
+    "successBody": "{{email}} wurde eingeladen."
+  },
+  "errors": {
+    "duplicate": "Diese E-Mail-Adresse wurde bereits eingeladen.",
+    "invalidEmail": "Bitte gib eine gültige E-Mail-Adresse ein.",
+    "unauthorized": "Du bist nicht berechtigt, in dieses Team einzuladen.",
+    "generic": "Die Einladung konnte nicht versendet werden. Bitte versuche es erneut.",
+    "noTeam": "Bitte zuerst ein Vertriebsteam auswählen bzw. anlegen — ohne Team kann keine Einladung verschickt werden."
+  },
+  "table": {
+    "name": "Name",
+    "role": "Rolle",
+    "status": "Status"
+  },
+  "status": {
+    "invited": "Eingeladen",
+    "activated": "Aktiviert",
+    "synced": "Synchronisiert",
+    "removed": "Entfernt"
+  },
+  "unnamed": "Unbenannter Mitarbeiter",
+  "empty": {
+    "heading": "Noch keine Mitarbeiter",
+    "body": "Lade deinen ersten Vertriebsmitarbeiter per E-Mail ein, um loszulegen."
+  },
+  "error": {
+    "heading": "Mitarbeiter konnten nicht geladen werden",
+    "body": "Bitte lade die Seite neu."
+  },
+  "createTeam": {
+    "heading": "Vertriebsteam anlegen",
+    "body": "Ein Team trägt Gebiete, Häuser und die Mitarbeiter, die dort unterwegs sind. Danach kannst du unter Unternehmen festlegen, welche Partner es verkaufen darf.",
+    "orgLabel": "Vertriebsorganisation",
+    "nameLabel": "Teamname",
+    "namePlaceholder": "z. B. Team Leonberg",
+    "submit": "Team anlegen",
+    "submitting": "Wird angelegt …",
+    "created": "„{name}\" ist angelegt.",
+    "error": "Das Team konnte nicht angelegt werden. Prüfe, ob du diese Vertriebsorganisation verwaltest.",
+    "leadLabel": "Teamleitung (optional)",
+    "leadNone": "Keine — später festlegen"
+  },
+  "teamSelect": {
+    "label": "Team für Einladungen"
+  },
+  "teamLead": {
+    "heading": "Teamleitung festlegen",
+    "body": "Das hier gibt der Person den Zugang zum Dashboard. Die Rolle „Teamleitung“ in der Einladung allein tut das nicht — erst wer hier eingetragen ist, sieht nach dem Anmelden Team, Gebiete und Abschlüsse statt „Kein Zugang“.",
+    "teamLabel": "Team",
+    "personLabel": "Person",
+    "submit": "Als Teamleitung festlegen",
+    "submitting": "Wird festgelegt …",
+    "assigned": "„{name}“ leitet dieses Team jetzt und hat Zugang zum Dashboard.",
+    "error": "Die Teamleitung konnte nicht festgelegt werden. Prüfe, ob du die Vertriebsorganisation dieses Teams verwaltest.",
+    "emptyCandidates": "Noch niemand in diesem Team — zuerst einladen."
+  }
+}

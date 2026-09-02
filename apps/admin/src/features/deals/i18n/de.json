@@ -1,0 +1,38 @@
+{
+  "title": "Abschlüsse",
+  "subtitle": "Einzelne abgeschlossene Verträge — mit Zugriff auf das jeweilige Dokument.",
+  "table": {
+    "reference": "Deal-Referenz",
+    "customer": "Kunde",
+    "rep": "Mitarbeiter",
+    "signedAt": "Unterschrieben",
+    "status": "Status",
+    "document": "Dokument"
+  },
+  "status": {
+    "signed": "Signiert",
+    "cancelled": "Widerrufen"
+  },
+  "openCta": "Dokument öffnen",
+  "empty": {
+    "heading": "Noch keine Abschlüsse",
+    "body": "Sobald ein Vertrag an der Tür unterschrieben und übertragen wurde, steht er hier."
+  },
+  "error": {
+    "heading": "Abschlüsse konnten nicht geladen werden",
+    "body": "Bitte die Seite neu laden. Bleibt es dabei, ist der Server gerade nicht erreichbar."
+  },
+  "pdf": {
+    "pending": "Noch nicht fertig",
+    "failed": "Fehlgeschlagen",
+    "offline": "Keine Verbindung",
+    "unavailable": "Kein Dokument"
+  },
+  "delivery": {
+    "header": "Zustellung",
+    "delivered": "Zugestellt",
+    "pending": "In Arbeit",
+    "dead_letter": "Fehlgeschlagen",
+    "attemptsHint": "{{attempts}} Versuche — {{error}}"
+  }
+}

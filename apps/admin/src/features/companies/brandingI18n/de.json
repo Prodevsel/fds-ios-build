@@ -1,0 +1,106 @@
+{
+  "title": "Standard-Branding",
+  "subtitle": "Der Default, den neue Partnerunternehmen erben. Einzelne Firmen können ihn im Firmen-Detail (Unternehmen → Reiter „Branding“) überschreiben oder selbst im Partner-Portal verwalten.",
+  "company": {
+    "label": "Unternehmen",
+    "standard": "Standard (Plattform-Vorgabe)"
+  },
+  "actions": {
+    "dirty": "Ungespeicherte Änderungen",
+    "reset": "Zurücksetzen",
+    "save": "Speichern",
+    "saving": "Wird gespeichert …"
+  },
+  "standardBanner": {
+    "heading": "Dieses Unternehmen nutzt das Standard-Branding",
+    "body": "Alle Felder erben aktuell die Plattform-Vorgabe. Passe einzelne Felder an, um für dieses Unternehmen davon abzuweichen.",
+    "adopt": "Standard anpassen"
+  },
+  "readOnlyNote": "Die Plattform-Vorgabe wird zentral vom Operator verwaltet und ist hier schreibgeschützt. Wähle ein Unternehmen, um abweichendes Branding zu pflegen.",
+  "inherited": "Erbt Standard",
+  "overridden": "Überschrieben",
+  "resetToDefault": "Zurücksetzen auf Standard",
+  "previewOnly": "Nur Vorschau",
+  "logo": {
+    "heading": "Logo",
+    "body": "Zwei Ausführungen für helle und dunkle Flächen. PNG oder SVG, max. 2 MB.",
+    "onLight": "Auf hell",
+    "onDark": "Auf dunkel",
+    "favicon": "Favicon",
+    "faviconHint": "favicon.ico · 32×32",
+    "lightFile": "logo-light.svg",
+    "darkFile": "logo-dark.svg",
+    "upload": "Logo auswählen",
+    "previewAlt": "Logo-Vorschau",
+    "faviconUpload": "Favicon auswählen",
+    "faviconPreviewAlt": "Favicon-Vorschau",
+    "uploadError": "Upload fehlgeschlagen. Bitte erneut versuchen."
+  },
+  "colors": {
+    "heading": "Markenfarben",
+    "body": "Primärfarbe für Kopfzeilen und Flächen, Akzent für Buttons und Hervorhebungen.",
+    "primary": "Primärfarbe",
+    "accent": "Akzentfarbe",
+    "presets": "Presets",
+    "invalid": "Bitte gib eine gültige Hex-Farbe an (#rrggbb)."
+  },
+  "typography": {
+    "heading": "Typografie",
+    "body": "Schriftfamilie für Überschriften in Dokumenten und E-Mails."
+  },
+  "sender": {
+    "heading": "Absender & Fußzeile",
+    "body": "Erscheint im E-Mail-Absender und am Fuß jedes PDF-Dokuments.",
+    "displayName": "Anzeigename des Unternehmens",
+    "displayNamePlaceholder": "Musterfirma",
+    "name": "Absendername",
+    "namePlaceholder": "z. B. Musterfirma Service",
+    "reply": "Antwort-Adresse",
+    "replyPlaceholder": "service@firma.de",
+    "localPart": "Absender (lokaler Teil)",
+    "localPartPlaceholder": "vertrag",
+    "footer": "Dokument-Fußzeile",
+    "footerPlaceholder": "Musterfirma · Musterstraße 1, 12345 Musterstadt · HRB 000000 · USt-IdNr. DE000000000",
+    "identityLabel": "Absender-Identität"
+  },
+  "preview": {
+    "label": "Live-Vorschau · {{company}}",
+    "note": "Vorschau nutzt die Markenfarben des Partners — nicht die des Dashboards.",
+    "tabs": {
+      "pdf": "PDF",
+      "mail": "E-Mail",
+      "portal": "Portal"
+    },
+    "pdf": {
+      "docNo": "Nr. 004417",
+      "title": "Vertragsbestätigung",
+      "product": "Produkt",
+      "commission": "Provision",
+      "row1": "Glasfaser 1000",
+      "row1Value": "85,00 €",
+      "row2": "Solar Komplettpaket",
+      "row2Value": "3,5 %",
+      "cta": "Digital unterschreiben"
+    },
+    "mail": {
+      "subject": "Ihr Vertrag ist bereit zur Unterschrift",
+      "greeting": "Guten Tag,",
+      "cta": "Vertrag ansehen"
+    },
+    "portal": {
+      "navContracts": "Verträge",
+      "navCommission": "Provision",
+      "navAccount": "Konto",
+      "welcome": "Willkommen zurück",
+      "openContracts": "OFFENE VERTRÄGE",
+      "openContractsValue": "7",
+      "commissionMtd": "PROVISION MTD",
+      "commissionMtdValue": "2.480 €",
+      "cta": "Neuen Vertrag starten"
+    }
+  },
+  "toast": {
+    "saved": "Branding gespeichert",
+    "reset": "Auf Standard zurückgesetzt"
+  }
+}

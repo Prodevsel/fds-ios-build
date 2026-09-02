@@ -1,0 +1,24 @@
+{
+  "heading": "Bestenliste",
+  "subtitle": "Sichtbarkeit und Umfang der Team-Bestenliste für diese Organisation.",
+  "loading": "Konfiguration wird geladen…",
+  "notAdmin": "Nur Organisations-Admins können die Bestenliste konfigurieren.",
+  "scope": {
+    "legend": "Umfang",
+    "team": {
+      "label": "Nur eigenes Team",
+      "hint": "Standard. Jedes Team sieht ausschließlich seine eigene Rangliste."
+    },
+    "org": {
+      "label": "Unternehmensweit",
+      "hint": "Bewusste Freigabe: alle Teams der Organisation sehen dieselbe, unternehmensweite Rangliste."
+    }
+  },
+  "showCommission": {
+    "label": "Provisionsbeträge anzeigen",
+    "hint": "Zeigt Provisionssummen in der Rangliste. Standardmäßig deaktiviert."
+  },
+  "save": "Speichern",
+  "saving": "Speichert…",
+  "saved": "Gespeichert"
+}

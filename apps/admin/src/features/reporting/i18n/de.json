@@ -1,0 +1,59 @@
+{
+  "title": "Reporting",
+  "subtitle": "Abschlüsse pro Sales Rep im Team.",
+  "range": {
+    "label": "Zeitraum",
+    "d7": "7 Tage",
+    "d30": "30 Tage",
+    "d90": "90 Tage"
+  },
+  "kpi": {
+    "activeContracts": "Aktive Verträge",
+    "activeReps": "Aktive Mitarbeiter",
+    "avgPerRep": "Ø pro Rep",
+    "topPerformer": "Top-Performer",
+    "topPerformerEmpty": "—"
+  },
+  "trend": {
+    "title": "Trend pro Woche",
+    "caption": "Abschlüsse · {{range}}",
+    "axisWeek": "Woche",
+    "axisDeals": "Abschlüsse",
+    "weekShort": "KW"
+  },
+  "team": {
+    "title": "Team-Vergleich · Abschlüsse",
+    "axisRep": "Mitarbeiter",
+    "axisDeals": "Abschlüsse"
+  },
+  "table": {
+    "toggleShow": "Als Tabelle anzeigen",
+    "toggleHide": "Als Diagramm anzeigen",
+    "rep": "Sales Rep",
+    "week": "Woche",
+    "deals": "Abschlüsse",
+    "commission": "Provision",
+    "quote": "Quote",
+    "avgDeal": "Ø Deal",
+    "noData": "—",
+    "unnamed": "Ohne Namen",
+    "teamTotal": "Team gesamt",
+    "sortAsc": "aufsteigend sortiert",
+    "sortDesc": "absteigend sortiert"
+  },
+  "perRep": {
+    "title": "Sales Reps"
+  },
+  "empty": {
+    "heading": "Noch keine Abschlüsse",
+    "inPeriod": "in diesem Zeitraum",
+    "body": "Sobald das Team erste Verträge abschließt, erscheinen hier KPIs und Trends.",
+    "noRepsHeading": "Noch keine Mitarbeiter im Team",
+    "noRepsBody": "Lade dein Team ein, um Abschlüsse pro Sales Rep zu sehen.",
+    "invite": "Mitarbeiter einladen"
+  },
+  "error": {
+    "heading": "Reporting konnte nicht geladen werden",
+    "body": "Bitte lade die Seite neu oder versuche es später erneut."
+  }
+}

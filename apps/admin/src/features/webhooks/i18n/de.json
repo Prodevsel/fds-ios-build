@@ -1,0 +1,106 @@
+{
+  "title": "Webhooks",
+  "subtitle": "Ziel-Endpunkt, Signatur-Secret und Ereignis-Zustellung eines Unternehmens verwalten.",
+  "company": {
+    "label": "Unternehmen",
+    "placeholder": "Unternehmen auswählen …",
+    "all": "Alle Unternehmen (Operator)"
+  },
+  "tabs": {
+    "config": "Konfiguration",
+    "eventLog": "Event-Log",
+    "endpoints": "Endpoints",
+    "ariaLabel": "Webhook-Bereiche"
+  },
+  "operator": {
+    "endpoints": {
+      "title": "Endpoints",
+      "company": "Unternehmen",
+      "targetUrl": "Ziel-URL",
+      "status": "Status",
+      "active": "Aktiv",
+      "inactive": "Inaktiv",
+      "empty": {
+        "heading": "Noch keine Endpoints",
+        "body": "Für keines deiner Unternehmen wurde bisher ein Webhook-Ziel konfiguriert."
+      }
+    },
+    "eventLog": {
+      "company": "Unternehmen",
+      "empty": {
+        "heading": "Noch keine Webhook-Events",
+        "body": "Sobald ein Vertrag signiert oder widerrufen wird, erscheinen die Webhook-Ereignisse aller Unternehmen hier."
+      }
+    }
+  },
+  "config": {
+    "cardTitle": "Endpoint konfigurieren",
+    "targetLabel": "Ziel-URL",
+    "targetPlaceholder": "https://api.partner.de/webhooks/frontdoorsales",
+    "targetHint": "Nur HTTPS-URLs sind zulässig. Jede Zustellung wird per HMAC-SHA256 signiert.",
+    "secretLabel": "Signatur-Secret",
+    "secretWarning": "Das Secret wird nur einmal angezeigt. Speichere es sicher — es kann danach nicht erneut abgerufen werden.",
+    "save": "Speichern",
+    "saving": "Wird gespeichert …",
+    "saved": "Gespeichert",
+    "testPing": "Test-Ping senden",
+    "testing": "Wird gesendet …",
+    "testSuccess": "Test-Ping erfolgreich zugestellt.",
+    "testFail": "Test-Ping fehlgeschlagen. Prüfe die Ziel-URL und die Erreichbarkeit des Endpunkts.",
+    "invalidUrl": "Bitte gib eine gültige HTTPS-URL ein.",
+    "empty": {
+      "heading": "Noch kein Webhook-Ziel konfiguriert",
+      "body": "Trage unten eine HTTPS-Ziel-URL ein und speichere sie, um Ereignisse an dieses Unternehmen zuzustellen."
+    }
+  },
+  "stats": {
+    "delivered": "Zugestellt",
+    "pending": "Ausstehend",
+    "deadLetter": "Dead-Letter",
+    "total": "Gesamt"
+  },
+  "eventLog": {
+    "table": {
+      "event": "Ereignis",
+      "type": "Typ",
+      "status": "Status",
+      "attempts": "Versuche",
+      "created": "Zeit"
+    },
+    "status": {
+      "delivered": "Zugestellt",
+      "pending": "Ausstehend",
+      "dead_letter": "Fehlgeschlagen"
+    },
+    "expand": "Details anzeigen",
+    "collapse": "Details ausblenden",
+    "redeliver": "Erneut zustellen",
+    "redelivering": "Wird zugestellt …",
+    "redeliverHint": "Erneute Zustellung ist nur für fehlgeschlagene (dead_letter) Ereignisse möglich.",
+    "empty": {
+      "heading": "Noch keine Webhook-Events",
+      "body": "Sobald ein Vertrag signiert oder widerrufen wird, erscheinen die zugehörigen Webhook-Ereignisse hier."
+    }
+  },
+  "drawer": {
+    "eventId": "Event-ID",
+    "payload": "Payload",
+    "lastError": "Letzter Fehler",
+    "ladder": "Zustellversuche",
+    "ladderHint": "Backoff-Intervalle bis zum dead_letter-Status:",
+    "company": "Unternehmen",
+    "targetUrl": "Ziel-URL",
+    "time": "Zeitpunkt",
+    "status": "Status",
+    "attempts": "Versuche",
+    "close": "Schließen"
+  },
+  "selectPrompt": {
+    "heading": "Unternehmen auswählen",
+    "body": "Wähle oben ein Unternehmen, um dessen Webhooks zu verwalten."
+  },
+  "error": {
+    "heading": "Ereignisse konnten nicht geladen werden",
+    "body": "Bitte lade die Seite neu."
+  }
+}

@@ -1,0 +1,243 @@
+# Unsigned iOS IPA — the no-Mac path onto a physical iPhone.
+#
+# Why unsigned: signing on CI needs a paid Apple Developer Program membership (every Apple
+# distribution route does — Ad Hoc, TestFlight, App Store, Enterprise). This job deliberately
+# skips signing entirely and hands back a bare .ipa. You then sign it locally on Windows with
+# Sideloadly / AltStore using a FREE Apple ID, which uses Apple's own developer-certificate
+# infrastructure. The resulting install is valid for 7 days.
+#
+# Prerequisite already established by ios-prebuild-probe.yml: prebuild succeeds and all 343
+# pods resolve on macos-15 / Xcode 16.4. Do not run this before that probe is green — an
+# archive of 343 pods is expensive and failing at pod install would waste all of it.
+#
+# Cost: macOS runners bill at 10x on private repos and an archive is the long pole. Budget
+# roughly 25-40 minutes of wall clock, i.e. 250-400 billed minutes. workflow_dispatch and a
+# path filter only — never on ordinary pushes.
+name: iOS unsigned IPA
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/ios-unsigned-ipa.yml'
+
+jobs:
+  ipa:
+    runs-on: macos-15
+    timeout-minutes: 60
+
+    # EXPO_PUBLIC_* are inlined into the JS bundle by babel-preset-expo at bundle time.
+    # The first seven runs set none of them, so `requireEnv` in
+    # apps/mobile/src/lib/auth/supabase.ts threw on the first getSupabase() call and the
+    # release build died right after the splash with no visible error. A green archive
+    # proves nothing about this; see the bundle assertion below.
+    #
+    # DEMO_HOST is this laptop's Tailscale address, not its LAN address. A LAN IP is
+    # baked into the bundle and dies the moment the demo happens on a different network,
+    # which is exactly the situation a customer visit creates. The Tailscale address
+    # follows the machine anywhere, including back at the desk. Requires the Tailscale
+    # app on the iPhone, signed into the same tailnet.
+    #
+    # 100.64/10 is CGNAT space, which Apple's NSAllowsLocalNetworking exemption does NOT
+    # cover, so the demo build also flips NSAllowsArbitraryLoads via
+    # EXPO_PUBLIC_DEMO_INSECURE_ATS (see apps/mobile/app.config.ts). Release builds set
+    # neither and keep the strict ATS default.
+    env:
+      DEMO_HOST: 100.83.111.128
+      EXPO_PUBLIC_DEMO_INSECURE_ATS: '1'
+      # Renders the backend-host field on the login screen, so a demo on an unforeseen
+      # network is retyped in five seconds instead of rebuilt in thirteen minutes.
+      EXPO_PUBLIC_DEMO_BACKEND_OVERRIDE: '1'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # The default Xcode on macos-15 is 16.4, which ships Swift 6.1. One of the Swift packages
+      # in this dependency graph declares tools version 6.2.0, and SPM refuses outright:
+      #   "package 'apple' is using Swift tools version 6.2.0 but the installed version is 6.1.0"
+      # The runner image carries several Xcodes, so select the newest rather than pinning a
+      # version that will age out of the image.
+      - name: Select the newest available Xcode
+        run: |
+          echo "--- installed ---"
+          ls -d /Applications/Xcode*.app
+          # Take the NEWEST. Earlier comments here pinned 26.2 on the theory that 26.3's
+          # Swift 6.2.4 broke expo-screen-capture. That was a misread: the screen-capture
+          # failure was 'cannot find SceneGeometry in scope', a package version mismatch,
+          # and it is compiler-independent (see the expo-screen-capture pin in
+          # apps/mobile/package.json). The real toolchain constraint runs the other way:
+          #   16.4  (Swift 6.1)   -> SPM refuses, a package needs tools version 6.2.0
+          #   26.0.1 (Swift 6.2.0) -> expo-modules-jsi uses `weak let`, which 6.2.0 rejects
+          #                           ("'weak' must be a mutable variable")
+          #   26.3  (Swift 6.2.4) -> accepts `weak let`; run 32837398110 compiled and linked
+          #                           the entire native graph, dSYM included, on this Xcode.
+          # So: newest wins, and there is no upper bound to respect.
+          newest=$(ls -d /Applications/Xcode_*.app | sort -V | tail -1)
+          echo "selecting: $newest"
+          sudo xcode-select -s "$newest/Contents/Developer"
+          xcodebuild -version
+          swift --version 2>&1 | head -1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Enable pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+
+      - name: Install workspace dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Same assertion as the probe. SQLCipher silently falling back to plain SQLite on iOS is
+      # exactly the defect this project just fixed; an .ipa shipped with an unencrypted local
+      # database would be worse than no .ipa at all.
+      - name: Assert SQLCipher is enabled
+        run: |
+          v=$(node -p "require('./package.json')['op-sqlite'] && require('./package.json')['op-sqlite'].sqlcipher")
+          echo "op-sqlite.sqlcipher = $v"
+          [ "$v" = "true" ] || { echo "::error::SQLCipher would be disabled"; exit 1; }
+
+      # expo-screen-capture 56.0.5 calls SceneGeometry.keyWindow(), a symbol that does not
+      # exist in expo-modules-core 56.0.21 (the version SDK 56 resolves). It compiles nowhere,
+      # on any Xcode. 56.0.4 is the last release before that call landed. Removing the package
+      # instead is NOT an option: src/features/app-lock/screenProtection/useScreenCapture.ts
+      # imports it, and Metro then fails the bundle step at the very end of a 25-minute archive
+      # (that is exactly what run 32837398110 did). Fail here, in seconds, if the pin regresses.
+      - name: Assert expo-screen-capture is on a compilable version
+        run: |
+          test -d node_modules/expo-screen-capture || { echo "::error::expo-screen-capture missing; Metro will fail to resolve it"; exit 1; }
+          if grep -q "SceneGeometry" node_modules/expo-screen-capture/ios/ScreenCaptureModule.swift; then
+            echo "::error::expo-screen-capture references SceneGeometry, which expo-modules-core does not provide"
+            exit 1
+          fi
+          node -p "'expo-screen-capture ' + require('./node_modules/expo-screen-capture/package.json').version"
+
+      # Expo CLI loads apps/mobile/.env at bundle time; the same values also go into the
+      # job environment so the xcodebuild bundle script sees them either way.
+      - name: Bake the demo backend config
+        working-directory: apps/mobile
+        run: |
+          cat > .env <<EOF
+          EXPO_PUBLIC_SUPABASE_URL=http://${DEMO_HOST}:54321
+          EXPO_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0
+          EXPO_PUBLIC_POWERSYNC_URL=http://${DEMO_HOST}:8080
+          EXPO_PUBLIC_SUPABASE_FUNCTIONS_URL=http://${DEMO_HOST}:54321/functions/v1
+          EXPO_PUBLIC_ENABLE_TERRITORY_DRAW=1
+          EXPO_PUBLIC_DEMO_INSECURE_ATS=1
+          EXPO_PUBLIC_DEMO_BACKEND_OVERRIDE=1
+          EOF
+          cat .env
+          {
+            echo "EXPO_PUBLIC_SUPABASE_URL=http://${DEMO_HOST}:54321"
+            echo "EXPO_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0"
+            echo "EXPO_PUBLIC_POWERSYNC_URL=http://${DEMO_HOST}:8080"
+            echo "EXPO_PUBLIC_SUPABASE_FUNCTIONS_URL=http://${DEMO_HOST}:54321/functions/v1"
+            echo "EXPO_PUBLIC_ENABLE_TERRITORY_DRAW=1"
+            echo "EXPO_PUBLIC_DEMO_INSECURE_ATS=1"
+            echo "EXPO_PUBLIC_DEMO_BACKEND_OVERRIDE=1"
+          } >> "$GITHUB_ENV"
+
+      - name: Prebuild
+        working-directory: apps/mobile
+        run: npx expo prebuild -p ios --no-install
+
+      - name: Pods
+        working-directory: apps/mobile/ios
+        run: pod install --repo-update
+
+      - name: Resolve scheme name
+        id: scheme
+        working-directory: apps/mobile/ios
+        run: |
+          # Do not hardcode the scheme: prebuild derives it from app.config.ts's name, and a
+          # rename there would break this job in a way that is annoying to diagnose.
+          s=$(ls -d *.xcworkspace | head -1 | sed 's/\.xcworkspace$//')
+          echo "name=$s" >> "$GITHUB_OUTPUT"
+          echo "scheme: $s"
+
+      - name: Archive without signing
+        working-directory: apps/mobile/ios
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -workspace "${{ steps.scheme.outputs.name }}.xcworkspace" \
+            -scheme "${{ steps.scheme.outputs.name }}" \
+            -configuration Release \
+            -sdk iphoneos \
+            -archivePath "$PWD/build/App.xcarchive" \
+            -destination 'generic/platform=iOS' \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            archive 2>&1 | tee "$RUNNER_TEMP/archive.log" | tail -40 || true
+          # The first attempt truncated to the last 60 lines and threw the reason away:
+          # xcodebuild emits thousands of "Disabling previews" notes after the real error,
+          # so it scrolls out of the tail window. Keep the whole log and grep the failure
+          # out explicitly rather than hoping it lands in the visible slice.
+          echo "===== error context ====="
+          # -A 20: the previous run showed "Could not resolve package dependencies:" but the
+          # grep printed only the matching line, so the actual package and reason stayed hidden.
+          # SPM prints its detail on the following lines.
+          grep -nE -A 20 "error:|PhaseScriptExecution failed|ARCHIVE FAILED" "$RUNNER_TEMP/archive.log" | head -80 || true
+          grep -q "ARCHIVE SUCCEEDED" "$RUNNER_TEMP/archive.log"
+
+      - name: Upload the full archive log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xcodebuild-archive-log
+          path: ${{ runner.temp }}/archive.log
+          if-no-files-found: warn
+          retention-days: 5
+
+      # The seven earlier runs all produced a bundle with no backend URL in it at all.
+      # Grep the actual artifact rather than trusting that the env step ran: this is the
+      # difference between "the build is green" and "the app starts".
+      - name: Assert the backend config reached the bundle
+        working-directory: apps/mobile/ios
+        run: |
+          APP=$(ls -d build/App.xcarchive/Products/Applications/*.app | head -1)
+          grep -aq "http://${DEMO_HOST}:54321" "$APP/main.jsbundle" || {
+            echo "::error::main.jsbundle contains no Supabase URL - the app would throw at first getSupabase()"
+            exit 1
+          }
+          grep -aq "http://${DEMO_HOST}:8080" "$APP/main.jsbundle" || {
+            echo "::error::main.jsbundle contains no PowerSync URL"
+            exit 1
+          }
+          plutil -extract NSAppTransportSecurity.NSAllowsArbitraryLoads raw "$APP/Info.plist" | grep -q true || {
+            echo "::error::ATS still blocks cleartext - the app cannot reach a 100.64/10 Tailscale address"
+            exit 1
+          }
+          echo "backend config present in bundle, ATS exception present"
+
+      # An .ipa is just a zip with the .app inside a Payload/ directory. xcodebuild's own
+      # export step wants a provisioning profile, which is precisely what we do not have —
+      # so assemble the container by hand instead.
+      - name: Assemble the .ipa by hand
+        working-directory: apps/mobile/ios
+        run: |
+          APP=$(ls -d build/App.xcarchive/Products/Applications/*.app | head -1)
+          echo "app bundle: $APP"
+          rm -rf payload && mkdir -p payload/Payload
+          cp -R "$APP" payload/Payload/
+          cd payload
+          zip -qry "../FrontDoorSales-unsigned.ipa" Payload
+          cd ..
+          ls -lh FrontDoorSales-unsigned.ipa
+
+      - name: Upload the .ipa
+        uses: actions/upload-artifact@v4
+        with:
+          name: FrontDoorSales-unsigned-ipa
+          path: apps/mobile/ios/FrontDoorSales-unsigned.ipa
+          retention-days: 5
+
+      - name: Next steps
+        if: success()
+        run: |
+          echo "::notice::Download the artifact, then sign it on Windows with Sideloadly using a free Apple ID. Valid 7 days."
+          echo "If Sideloadly complains about push entitlements, strip them — expo-notifications'"
+          echo "aps-environment is unavailable on a free Apple ID and is not needed before Phase 21."
